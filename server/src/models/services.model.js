@@ -14,6 +14,7 @@ async function findAllServices() {
       created_at,
       updated_at
     FROM services
+    WHERE is_active=1
     ORDER BY id ASC`
   );
 

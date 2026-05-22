@@ -669,21 +669,21 @@ const updateAppointmentStatus = async (req, res) => {
 
     let googleCalendarResult = null;
 
-if (
-  status === "cancelled" &&
-  currentAppointment.google_event_id &&
-  currentAppointment.google_sync_status !== "cancelled"
-) {
-  googleCalendarResult = await cancelGoogleCalendarEventForAppointment(
-    currentAppointment
-  );
-} else if (status === "cancelled") {
-  googleCalendarResult = {
-    action: "skipped",
-    synced: false,
-    reason: "Appointment is not linked to a cancellable Google Calendar event"
-  };
-}
+    if (
+      status === "cancelled" &&
+      currentAppointment.google_event_id &&
+      currentAppointment.google_sync_status !== "cancelled"
+    ) {
+      googleCalendarResult = await cancelGoogleCalendarEventForAppointment(
+        currentAppointment
+      );
+    } else if (status === "cancelled") {
+      googleCalendarResult = {
+        action: "skipped",
+        synced: false,
+        reason: "Appointment is not linked to a cancellable Google Calendar event"
+      };
+    }
 
     const updatedAppointment = await updateAppointmentStatusById({
       appointmentId: req.params.id,
